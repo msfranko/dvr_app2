@@ -4,6 +4,9 @@ Dir['./models/*.rb'].each { |model| require model }
 
 # this wasn't auto-required above, for some reason...
 require 'rack-flash'
+require 'zip'
+require 'sequel'
+require 'yaml'
 
 require './controllers/application_controller'
 Dir['./controllers/*.rb'].each { |controller| require controller }

@@ -27,6 +27,9 @@ namespace :db do
   end
 
   desc "seed db"
+  # $ rake db:seed[]
+  # $ rake db:seed[test]
+   # $ rake db:seed[production]
   task :seed, [:env] do |cmd, args|
     # default environment
     env = args[:env] || "development"
@@ -36,4 +39,36 @@ namespace :db do
     Rake::Task['environment'].invoke(env)
     require './db/seeds'
   end
+
+    desc "Run database migrations"
+    task :migrate, :env do |cmd, args|
+    env = args[:env] || "development"
+    Rake::Task['environment'].invoke(env)
+    require 'sequel/extensions/migration'
+    # apply database, migration_folder
+    # runs all migration files in db/migrations
+    # generated first
+    Sequel::Migrator.apply(DB, "db/migrations")
+  end
+
+  desc "creates db, applies migrations, seeds db"
+  task :setup => [:create, :migrate, :seed, :env] do |cmd, args|
+  env = args[:env] || "development"
+  Rake::Task['db:drop'].invoke(env)
+  Rake::Task['db:create'].invoke(env)
+  Rake::Task['db:migrate'].invoke(env)
+  Rake::Task['db:seed'].invoke(env)
+  end
+
+  desc "Rollback the database"
+  task :rollback, :env do |cmd, args|
+    env = args[:env] || "development"
+    Rake::Task['environment'].invoke(env)
+    require 'sequel/extensions/migration'
+    version = (row = App::DB[:schema_info].first) ? row[:version] : nil
+    Sequel::Migrator.apply(DB, "db/migrations", version - 1)
+  end
+
+
+
 end

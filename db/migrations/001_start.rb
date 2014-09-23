@@ -1,3 +1,6 @@
+
+# db/migrations/001_start.rb
+
 Sequel.migration do
   change do
     create_table(:stations) do
@@ -46,3 +49,7 @@ Sequel.migration do
       DateTime :created_at, :default=>Sequel::CURRENT_TIMESTAMP
     end
   end
+<<<<<<< HEAD
+=======
+end
+>>>>>>> d82351cbbb382d758659fe3309f600dccc4babfe

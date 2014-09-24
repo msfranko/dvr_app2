@@ -61,12 +61,12 @@ CREATE TABLE recordings (
 -- Bonus...
 --
 
--- DROP TABLE IF EXISTS series_viewers; -- a viewer's series
--- CREATE TABLE series_viewers (
---   -- id           serial       PRIMARY KEY, -- not using this in our join table...
---   viewer_id integer REFERENCES viewers(id) NOT NULL,
---   series_id integer REFERENCES series(id) NOT NULL
--- );
+DROP TABLE IF EXISTS series_viewers; -- a viewer's series
+CREATE TABLE series_viewers (
+  -- id           serial       PRIMARY KEY, -- not using this in our join table...
+  viewer_id integer REFERENCES viewers(id) NOT NULL,
+  series_id integer REFERENCES series(id) NOT NULL
+);
 
 -- DROP TABLE IF EXISTS genres;
 -- DROP TABLE IF EXISTS genres_series;

@@ -49,3 +49,4 @@ Sequel.migration do
       DateTime :created_at, :default=>Sequel::CURRENT_TIMESTAMP
     end
   end
+end
